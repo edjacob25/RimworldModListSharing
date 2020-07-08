@@ -1,12 +1,12 @@
-@model IEnumerable<Mod>
+@model IEnumerable<WebApplication.Models.Database.Mod>
 @if (ViewData.ModelState.IsValid)
 {
     <h1>Mods</h1>
     <ol>
-    @foreach (var item in Model)
-    {
-        <li>@item.Name</li>
-    }
+        @foreach (var item in Model)
+        {
+            <li>@item.Name</li>
+        }
     </ol>
 }
 else
@@ -14,6 +14,7 @@ else
     <h1> Errors</h1>
     foreach (var (item, error) in ViewData.ModelState)
     {
-        <b>@item</b> @error
+        <b>@item</b>
+        @error
     }
 }

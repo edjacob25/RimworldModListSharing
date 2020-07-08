@@ -14,7 +14,7 @@ namespace WebApplication.Models
     public class BufferedSingleFileUploadDb
     {
         [Required]
-        [Display(Name="File")]
+        [Display(Name = "File")]
         [BindProperty]
         public IFormFile FormFile { get; set; }
     }
