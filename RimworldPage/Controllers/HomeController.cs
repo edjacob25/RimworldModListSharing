@@ -30,7 +30,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload(BufferedSingleFileUploadDb data)
+        public async Task<IActionResult> Upload(FileUpload data)
         {
             if (!ModelState.IsValid)
             {
@@ -56,7 +56,7 @@ namespace WebApplication.Controllers
                             .Select(x => x.InnerText);
                         var names = xml.SelectNodes("/ModList/modNames/li").Cast<XmlNode>()
                             .Select(x => x.InnerText);
-                        ;
+
                         foreach (var (id, name) in ids.Zip(names))
                         {
                             mods.Add(new Mod { Id = id, Name = name });
@@ -65,7 +65,8 @@ namespace WebApplication.Controllers
                         var modList = new ModList()
                         {
                             Id = Guid.NewGuid().ToString(),
-                            CreationDate = DateTime.Now
+                            CreationDate = DateTime.Now,
+                            Name = data.Name
                         };
                         await _context.ModLists.AddAsync(modList);
                         await _context.SaveChangesAsync();

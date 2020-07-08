@@ -5,7 +5,7 @@ namespace WebApplication.Models.Database
     public class MyContext : DbContext
     {
         public DbSet<ModList> ModLists { get; set; }
-        public DbSet<ModList> Mods { get; set; }
+        public DbSet<Mod> Mods { get; set; }
 
         public MyContext(DbContextOptions options) : base(options)
         {
@@ -13,14 +13,20 @@ namespace WebApplication.Models.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ModList>().ToTable("ModList");
+
             modelBuilder.Entity<ModList>()
                 .HasKey(m => m.Id);
+
+            modelBuilder.Entity<Mod>().ToTable("Mod");
 
             modelBuilder.Entity<Mod>()
                 .HasKey(m => new { m.Id, m.Name });
 
             modelBuilder.Entity<Mod>()
                 .HasAlternateKey(m => m.Id);
+
+            modelBuilder.Entity<ModListMod>().ToTable("ModListMod");
 
             modelBuilder.Entity<ModListMod>()
                 .HasKey(m => new { m.ModListId, m.ModId });

@@ -1,11 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model BufferedSingleFileUploadDb
+@model FileUpload
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Share your modlists</h1>
     <form enctype="multipart/form-data" method="post" asp-action="Upload">
         <dl>
             <dt>
@@ -13,6 +12,14 @@
             </dt>
             <dd>
                 <input asp-for="FormFile" type="file">
+            </dd>
+        </dl>
+        <dl>
+            <dt>
+                <label asp-for="Name"></label>
+            </dt>
+            <dd>
+                <input asp-for="Name" type="text">
             </dd>
         </dl>
         <input class="btn" type="submit" value="Upload">

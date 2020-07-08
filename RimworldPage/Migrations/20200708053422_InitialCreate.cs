@@ -8,8 +8,8 @@ namespace WebApplication.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Mod",
-                columns: table => new
+                "Mod",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
@@ -23,8 +23,8 @@ namespace WebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModList",
-                columns: table => new
+                "ModList",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     CreationDate = table.Column<DateTime>(nullable: false),
@@ -33,8 +33,8 @@ namespace WebApplication.Migrations
                 constraints: table => { table.PrimaryKey("PK_ModList", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "ModListMod",
-                columns: table => new
+                "ModListMod",
+                table => new
                 {
                     ModListId = table.Column<string>(nullable: false),
                     ModId = table.Column<string>(nullable: false),
@@ -44,35 +44,35 @@ namespace WebApplication.Migrations
                 {
                     table.PrimaryKey("PK_ModListMod", x => new { x.ModListId, x.ModId });
                     table.ForeignKey(
-                        name: "FK_ModListMod_ModList_ModListId",
-                        column: x => x.ModListId,
-                        principalTable: "ModList",
-                        principalColumn: "Id",
+                        "FK_ModListMod_ModList_ModListId",
+                        x => x.ModListId,
+                        "ModList",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ModListMod_Mod_ModId_ModName",
-                        columns: x => new { x.ModId, x.ModName },
-                        principalTable: "Mod",
-                        principalColumns: new[] { "Id", "Name" },
+                        "FK_ModListMod_Mod_ModId_ModName",
+                        x => new { x.ModId, x.ModName },
+                        "Mod",
+                        new[] { "Id", "Name" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ModListMod_ModId_ModName",
-                table: "ModListMod",
-                columns: new[] { "ModId", "ModName" });
+                "IX_ModListMod_ModId_ModName",
+                "ModListMod",
+                new[] { "ModId", "ModName" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ModListMod");
+                "ModListMod");
 
             migrationBuilder.DropTable(
-                name: "ModList");
+                "ModList");
 
             migrationBuilder.DropTable(
-                name: "Mod");
+                "Mod");
         }
     }
 }

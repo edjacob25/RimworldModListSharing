@@ -7,7 +7,9 @@ namespace WebApplication.Models.Database
     {
         public string Id { get; set; }
         public DateTime CreationDate { get; set; }
+        public string? Name { get; set; }
         public string? Author { get; set; }
+
         public List<ModListMod> Mods { get; set; }
     }
 }

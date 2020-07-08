@@ -10,7 +10,7 @@ using WebApplication.Models.Database;
 namespace WebApplication.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    internal partial class MyContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -51,6 +51,9 @@ namespace WebApplication.Migrations
 
                 b.Property<DateTime>("CreationDate")
                     .HasColumnType("timestamp without time zone");
+
+                b.Property<string>("Name")
+                    .HasColumnType("text");
 
                 b.HasKey("Id");
 
