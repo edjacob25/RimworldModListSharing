@@ -72,6 +72,9 @@ namespace WebApplication.Migrations
                     .IsRequired()
                     .HasColumnType("text");
 
+                b.Property<int>("Position")
+                    .HasColumnType("integer");
+
                 b.HasKey("ModListId", "ModId");
 
                 b.HasIndex("ModId", "ModName");
