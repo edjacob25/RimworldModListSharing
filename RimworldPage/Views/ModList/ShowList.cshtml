@@ -1,3 +1,18 @@
-@model IEnumerable<WebApplication.Models.Database.ModList>
+@model WebApplication.Models.Database.ModList
 
-<h1>@ViewBag.id</h1>
+@if (!string.IsNullOrEmpty(Model.Name))
+{
+    <h1>@Model.Name</h1>
+}
+<p>List created at @Model.CreationDate</p>
+<h2>Mods</h2>
+<ol>
+    @foreach (var item in Model.Mods.OrderBy(m => m.Position))
+    {
+        var steamLink = $"https://steamcommunity.com/workshop/browse/?appid=294100&searchtext={item.Mod.Name}" +
+                        "&browsesort=textsearch";
+        <li>
+            <a href="@steamLink">@item.Mod.Name</a>
+        </li>
+    }
+</ol>
