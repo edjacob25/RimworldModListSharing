@@ -59,8 +59,17 @@ namespace WebApplication.Controllers
 
                         foreach (var (id, name) in ids.Zip(names))
                         {
-                            mods.Add(new Mod { Id = id, Name = name });
+                            var mod = await _context.Mods.FindAsync(id, name);
+                            if (mod == null)
+                            {
+                                mod = new Mod { Id = id, Name = name };
+                                await _context.Mods.AddAsync(mod);
+                            }
+
+                            mods.Add(mod);
                         }
+
+                        await _context.SaveChangesAsync();
 
                         var modList = new ModList()
                         {
@@ -70,6 +79,13 @@ namespace WebApplication.Controllers
                         };
                         await _context.ModLists.AddAsync(modList);
                         await _context.SaveChangesAsync();
+
+                        var conns = mods.Select((m, index) =>
+                            new ModListMod { Mod = m, ModList = modList, Position = index });
+
+                        await _context.AddRangeAsync(conns);
+                        await _context.SaveChangesAsync();
+
                         return Redirect($"/ModList/{modList.Id}");
                     }
                     catch (Exception e)
