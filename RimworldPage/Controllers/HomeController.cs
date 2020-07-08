@@ -9,21 +9,23 @@ using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication.Models;
+using WebApplication.Models.Database;
 
 namespace WebApplication.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly MyContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, MyContext ctx)
         {
             _logger = logger;
+            _context = ctx;
         }
 
         public IActionResult Index()
         {
-            _logger.LogDebug("Index");
             return View();
         }
 
@@ -32,8 +34,10 @@ namespace WebApplication.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Error();
+                ModelState.AddModelError("File", "The file could not be processed.");
+                return View();
             }
+
             await using (var memoryStream = new MemoryStream())
             {
                 await data.FormFile.CopyToAsync(memoryStream);
@@ -47,18 +51,25 @@ namespace WebApplication.Controllers
                     try
                     {
                         xml.LoadXml(text.Trim('\uFEFF', '\u200B'));
-                        _logger.LogDebug($"Top element is: {xml.LocalName}");
                         var mods = new List<Mod>();
                         var ids = xml.SelectNodes("/ModList/modIds/li").Cast<XmlNode>()
-                            .Select(x =>x.InnerText);
+                            .Select(x => x.InnerText);
                         var names = xml.SelectNodes("/ModList/modNames/li").Cast<XmlNode>()
-                            .Select(x =>x.InnerText);;
-                        foreach (var (id, name) in ids.Zip(names) )
+                            .Select(x => x.InnerText);
+                        ;
+                        foreach (var (id, name) in ids.Zip(names))
                         {
-                            mods.Add(new Mod{Id = id, Name = name});
+                            mods.Add(new Mod { Id = id, Name = name });
                         }
 
-                        return View(mods);
+                        var modList = new ModList()
+                        {
+                            Id = Guid.NewGuid().ToString(),
+                            CreationDate = DateTime.Now
+                        };
+                        await _context.ModLists.AddAsync(modList);
+                        await _context.SaveChangesAsync();
+                        return Redirect($"/ModList/{modList.Id}");
                     }
                     catch (Exception e)
                     {
