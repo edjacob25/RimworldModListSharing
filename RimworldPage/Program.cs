@@ -18,13 +18,11 @@ namespace WebApplication
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
-                .ConfigureAppConfiguration((hostContext, builder) =>
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    if (hostContext.HostingEnvironment.IsDevelopment())
-                    {
-                        builder.AddUserSecrets<Program>();
-                    }
-                });
+                    webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureKestrel(s => s.ListenAnyIP(5000));
+                })
+                .ConfigureAppConfiguration((hostContext, builder) => { builder.AddUserSecrets<Program>(); });
     }
 }
