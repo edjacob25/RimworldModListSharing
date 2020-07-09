@@ -2,7 +2,12 @@
 
 @if (!string.IsNullOrEmpty(Model.Name))
 {
+    ViewData["Title"] = $"Mod List - {Model.Name}";
     <h1>@Model.Name</h1>
+}
+else
+{
+    ViewData["Title"] = "Mod List";
 }
 <p>List created at @Model.CreationDate</p>
 <h2>Mods</h2>
@@ -12,7 +17,7 @@
         var steamLink = $"https://steamcommunity.com/workshop/browse/?appid=294100&searchtext={item.Mod.Name}" +
                         "&browsesort=textsearch";
         <li>
-            <a href="@steamLink">@item.Mod.Name</a>
+            <a href="@steamLink" target="_blank">@item.Mod.Name</a>
         </li>
     }
 </ol>

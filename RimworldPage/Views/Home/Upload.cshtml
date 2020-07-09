@@ -1,3 +1,6 @@
+@{
+    ViewData["Title"] = "Error";
+}
 @model IEnumerable<WebApplication.Models.Database.Mod>
 @if (ViewData.ModelState.IsValid)
 {
@@ -14,7 +17,8 @@ else
     <h1> Errors</h1>
     foreach (var (item, error) in ViewData.ModelState)
     {
-        <b>@item</b>
-        @error
+        <p>
+            <b>@item</b> - @error.Errors.Aggregate("", (i, next) => next.ErrorMessage + ", " + i)
+        </p>
     }
 }
