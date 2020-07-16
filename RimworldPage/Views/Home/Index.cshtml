@@ -17,40 +17,40 @@
         <li><code>~/.config/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/ModLists</code> on Linux</li>
         <li><code>~/Library/Application Support/RimWorld/ModLists</code> on Mac</li>
     </ul>
+</div>
+<form enctype="multipart/form-data" method="post" asp-action="Upload">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="FormFile"></label>
+            <input asp-for="FormFile" type="file" class="form-control-file">
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" type="text" class="form-control">
+        </div>
+    </div>
 
-    <form enctype="multipart/form-data" method="post" asp-action="Upload">
-        <dl>
-            <dt>
-                <label asp-for="FormFile"></label>
-            </dt>
-            <dd>
-                <input asp-for="FormFile" type="file">
-            </dd>
-            <dt>
-                <label asp-for="Name"></label>
-            </dt>
-            <dd>
-                <input asp-for="Name" type="text">
-            </dd>
-            <dt>
-                <label asp-for="Version"></label>
-            </dt>
-            @foreach (var version in Versions)
-            {
-                <dd>
-                    <input type="radio" asp-for="Version" value="@version"/> @version<br/>
-                </dd>
-            }
-            <dt>
-                <label asp-for="ExpansionsUsed"></label>
-            </dt>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Version"></label>
+            <select class="form-control" asp-for="Version" asp-items="Versions.Select(e => new SelectListItem(e, e))">
+                <option value=""></option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label asp-for="ExpansionsUsed"></label>
             @foreach (var expansion in Expansions)
             {
-                <dd>
-                    <input type="checkbox" name="ExpansionsUsed" value="@expansion"/> @expansion<br/>
-                </dd>
+                <div class="form-check">
+                    <input type="checkbox" name="ExpansionsUsed" value="@expansion" class="form-check-input"/>
+                    <label for="ExpansionUsed" class="form-check-label">@expansion</label>
+                </div>
             }
-        </dl>
-        <input class="btn" type="submit" value="Upload">
-    </form>
-</div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="Upload">
+    </div>
+</form>
