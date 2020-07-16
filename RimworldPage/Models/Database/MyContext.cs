@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace WebApplication.Models.Database
 {
     public class MyContext : DbContext
     {
+        static MyContext() => NpgsqlConnection.GlobalTypeMapper.MapEnum<Expansions>();
         public DbSet<ModList> ModLists { get; set; }
         public DbSet<Mod> Mods { get; set; }
 
@@ -13,6 +15,8 @@ namespace WebApplication.Models.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasPostgresEnum<Expansions>();
+
             modelBuilder.Entity<ModList>().ToTable("ModList");
 
             modelBuilder.Entity<ModList>()
