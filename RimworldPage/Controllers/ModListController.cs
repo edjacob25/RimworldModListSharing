@@ -6,6 +6,7 @@ using WebApplication.Models.Database;
 
 namespace WebApplication.Controllers
 {
+    [Route("ModList")]
     public class ModListController : Controller
     {
         private readonly ILogger<ModListController> _logger;
@@ -17,7 +18,7 @@ namespace WebApplication.Controllers
             _context = context;
         }
 
-        [HttpGet("/ModList/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> ShowList([FromRoute] string id)
         {
             _logger.LogDebug($"The id is {id}");
