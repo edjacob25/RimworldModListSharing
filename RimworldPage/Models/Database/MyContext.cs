@@ -24,7 +24,7 @@ namespace WebApplication.Models.Database
                 .HasKey(m => new { m.Id, m.Name });
 
             modelBuilder.Entity<Mod>()
-                .HasAlternateKey(m => m.Id);
+                .HasIndex(m => m.Id);
 
             modelBuilder.Entity<ModListMod>().ToTable("ModListMod");
 
