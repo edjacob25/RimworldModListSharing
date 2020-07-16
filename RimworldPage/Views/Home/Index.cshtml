@@ -2,6 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 @model FileUpload
+@using static WebApplication.Models.FileUpload
 
 <div class="text-center">
     <h1 class="display-4">Share your modlists</h1>
@@ -25,14 +26,30 @@
             <dd>
                 <input asp-for="FormFile" type="file">
             </dd>
-        </dl>
-        <dl>
             <dt>
                 <label asp-for="Name"></label>
             </dt>
             <dd>
                 <input asp-for="Name" type="text">
             </dd>
+            <dt>
+                <label asp-for="Version"></label>
+            </dt>
+            @foreach (var version in Versions)
+            {
+                <dd>
+                    <input type="radio" asp-for="Version" value="@version"/> @version<br/>
+                </dd>
+            }
+            <dt>
+                <label asp-for="ExpansionsUsed"></label>
+            </dt>
+            @foreach (var expansion in Expansions)
+            {
+                <dd>
+                    <input type="checkbox" name="ExpansionsUsed" value="@expansion"/> @expansion<br/>
+                </dd>
+            }
         </dl>
         <input class="btn" type="submit" value="Upload">
     </form>
