@@ -9,15 +9,39 @@ else
 {
     ViewData["Title"] = "Mod List";
 }
-<p>List created at @Model.CreationDate</p>
-<h2>Mods</h2>
-<ol>
-    @foreach (var item in Model.Mods.OrderBy(m => m.Position))
+@if (Model.Version != null)
+{
+    <h4><span class="badge badge-primary">Rimworld @Model.Version</span></h4>
+}
+@if (Model.Expansions != null)
+{
+    <h5>
+    @foreach (var expansion in Model.Expansions)
     {
-        var steamLink = $"https://steamcommunity.com/workshop/browse/?appid=294100&searchtext={item.Mod.Name}" +
-                        "&browsesort=textsearch";
-        <li>
-            <a href="@steamLink" target="_blank">@item.Mod.Name</a>
-        </li>
+        <span class="badge badge-secondary">@expansion.ToString()</span>
     }
+    </h5>
+}
+<p>List created at <b>@Model.CreationDate</b></p>
+<h2>Mods</h2>
+@{
+    var halfList = (int) Math.Ceiling(Model.Mods.Count / 2.0f);
+    var baseLink = "https://steamcommunity.com/workshop/browse/?appid=294100&searchtext=";
+}
+<ol>
+    <div class="row">
+        <div class="col-md-6">
+             @foreach (var item in Model.Mods.OrderBy(m => m.Position))
+                {
+                    var steamLink = $"{baseLink}{item.Mod.Name}&browsesort=textsearch";
+                    if (item.Position == halfList && halfList > 25)
+                    {
+                        @Html.Raw("</div><div class=\"col-md-6\">")
+                    }
+                    <li>
+                        <a href="@steamLink" target="_blank">@item.Mod.Name</a>
+                    </li>
+                }
+        </div>
+    </div>
 </ol>
