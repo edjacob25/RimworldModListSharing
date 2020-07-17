@@ -3,6 +3,7 @@
 }
 @model FileUpload
 @using static WebApplication.Models.FileUpload
+@using WebApplication.Models.Database
 
 <div class="text-center">
     <h1 class="display-4">Share your modlists</h1>
@@ -40,7 +41,7 @@
 
         <div class="form-group col-md-6">
             <label asp-for="ExpansionsUsed"></label>
-            @foreach (var expansion in Expansions)
+            @foreach (var expansion in Enum.GetNames(typeof(Expansions)))
             {
                 <div class="form-check">
                     <input type="checkbox" name="ExpansionsUsed" value="@expansion" class="form-check-input"/>

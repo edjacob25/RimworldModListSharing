@@ -75,7 +75,9 @@ namespace WebApplication.Controllers
                         {
                             Id = Guid.NewGuid().ToString(),
                             CreationDate = DateTime.Now,
-                            Name = data.Name
+                            Name = data.Name,
+                            Version = data.Version,
+                            Expansions = data.ExpansionsUsed
                         };
                         await _context.ModLists.AddAsync(modList);
                         await _context.SaveChangesAsync();
