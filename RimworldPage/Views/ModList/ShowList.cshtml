@@ -22,7 +22,7 @@ else
     }
     </h5>
 }
-<p>List created at <b>@Model.CreationDate.ToLocalTime()</b></p>
+<p>List created at <b id="creationDateTime">@Model.CreationDate.ToString("u")</b></p>
 <h2>Mods</h2>
 @{
     var halfList = (int) Math.Ceiling(Model.Mods.Count / 2.0f);
@@ -31,17 +31,26 @@ else
 <ol>
     <div class="row">
         <div class="col-md-6">
-             @foreach (var item in Model.Mods.OrderBy(m => m.Position))
+            @foreach (var item in Model.Mods.OrderBy(m => m.Position))
+            {
+                var steamLink = $"{baseLink}{item.Mod.Name}&browsesort=textsearch";
+                if (item.Position == halfList && halfList > 25)
                 {
-                    var steamLink = $"{baseLink}{item.Mod.Name}&browsesort=textsearch";
-                    if (item.Position == halfList && halfList > 25)
-                    {
-                        @Html.Raw("</div><div class=\"col-md-6\">")
-                    }
-                    <li>
-                        <a href="@steamLink" target="_blank">@item.Mod.Name</a>
-                    </li>
+                    @Html.Raw("</div><div class=\"col-md-6\">")
                 }
+                <li>
+                    <a href="@steamLink" target="_blank">@item.Mod.Name</a>
+                </li>
+            }
         </div>
     </div>
 </ol>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let node = document.getElementById("creationDateTime");
+        let text = node.innerText;
+        let date = new Date(text);
+        node.innerText = date.toLocaleString();
+    }, false);
+</script>
