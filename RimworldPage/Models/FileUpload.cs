@@ -8,7 +8,7 @@ namespace WebApplication.Models
 {
     public class FileUpload
     {
-        public static readonly string[] Versions = { "1.0", "1.1", "1.2" };
+        public static readonly string[] Versions = { "1.0", "1.1", "1.2", "1.3" };
 
         [Required]
         [Display(Name = "File")]

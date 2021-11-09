@@ -74,7 +74,7 @@ namespace WebApplication.Controllers
                         var modList = new ModList()
                         {
                             Id = Guid.NewGuid().ToString(),
-                            CreationDate = DateTime.Now,
+                            CreationDate = DateTime.UtcNow,
                             Name = data.Name,
                             Version = data.Version,
                             Expansions = data.ExpansionsUsed
