@@ -22,7 +22,7 @@ else
     }
     </h5>
 }
-<p>List created at <b>@Model.CreationDate</b></p>
+<p>List created at <b>@Model.CreationDate.ToLocalTime()</b></p>
 <h2>Mods</h2>
 @{
     var halfList = (int) Math.Ceiling(Model.Mods.Count / 2.0f);
