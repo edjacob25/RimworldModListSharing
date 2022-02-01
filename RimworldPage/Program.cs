@@ -22,7 +22,6 @@ namespace WebApplication
                 {
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureKestrel(s => s.ListenAnyIP(5000));
-                })
-                .ConfigureAppConfiguration((hostContext, builder) => { builder.AddUserSecrets<Program>(); });
+                });
     }
 }
